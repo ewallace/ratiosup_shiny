@@ -1,4 +1,5 @@
 library(shiny)
+library(shinyURL)
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
@@ -27,5 +28,8 @@ shinyUI(fluidPage(
         p("Data from: 
           Reversible, Specific, Active Aggregates of Endogenous Proteins Assemble upon Heat Stress,
           Wallace et al., Cell 162 (6), 2015, http://drummondlab.org/endogenous-aggregates")
-    )
+    ),
+    
+    # Include button/text box for URL.
+    shinyURL.ui()
 ))

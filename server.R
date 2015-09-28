@@ -1,14 +1,10 @@
+# install.packages(c("shiny","data.table","ggplot2","devtools"))
+# devtools::install_github("aoles/shinyURL")
+
 library(shiny)
 library(reshape2)
-# library(data.table)
+library(shinyURL)
 library(ggplot2)
-
-##### 
-# To do:
-# -- data from scer_disaggregation_recovery_long.txt DONE
-# -- paper reference on user interface DONE
-# -- switch to view by orf
-# -- specify orf by url
 
 rs_dt_all <- read.table("scer_disaggregation_recovery_long.txt",
                          stringsAsFactors=FALSE,header=TRUE,sep="\t")
@@ -75,8 +71,8 @@ plot_recovery_bygene <- function(mygenes=c("OLA1","FBA1"),rdata=rs_dt,
 }
 
 
-# Define server logic required to draw a histogram
-shinyServer(function(input, output) {
+# Define server logic required to draw a plot
+shinyServer(function(input, output, session) {
     
     output$plot <- renderPlot({
         # time plot of 46C psup
@@ -88,9 +84,5 @@ shinyServer(function(input, output) {
         } 
         return(plot_recovery_bygene(ids,rs_dt,idType=input$idType))
     })
-#     output$tempPlot <- renderPlot({
-#         # temperature plot of 46C psup
-#         genes <- strsplit(input$genes,",")[[1]]
-#         plotmygenes(genes,errorbars=input$interval)$plot_temp
-#     })
+    shinyURL.server(session)
 })
